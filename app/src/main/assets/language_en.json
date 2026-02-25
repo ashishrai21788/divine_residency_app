@@ -1,0 +1,120 @@
+{
+  "app_name": "eRickshaw Driver",
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "forgot_password": "Forgot Password?",
+    "login_button": "Login",
+    "signup_link": "Don't have an account? Sign up",
+    "email_required": "Email is required",
+    "password_required": "Password is required",
+    "invalid_email": "Please enter a valid email",
+    "login_success": "Login successful",
+    "login_failed": "Login failed"
+  },
+  "signup": {
+    "title": "Sign Up",
+    "full_name": "Full Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "signup_button": "Sign Up",
+    "login_link": "Already have an account? Login",
+    "name_required": "Full name is required",
+    "phone_required": "Phone number is required",
+    "password_mismatch": "Passwords do not match",
+    "signup_success": "Account created successfully"
+  },
+  "forgot_password": {
+    "title": "Forgot Password",
+    "description": "Enter your email to reset your password",
+    "email": "Email",
+    "reset_button": "Reset Password",
+    "back_to_login": "Back to Login",
+    "reset_sent": "Password reset email sent"
+  },
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome",
+    "total_rides": "Total Rides",
+    "earnings": "Earnings",
+    "rating": "Rating",
+    "online_status": "Online Status",
+    "go_online": "Go Online",
+    "go_offline": "Go Offline"
+  },
+  "profile": {
+    "title": "Profile",
+    "personal_info": "Personal Information",
+    "vehicle_info": "Vehicle Information",
+    "settings": "Settings",
+    "logout": "Logout",
+    "edit_profile": "Edit Profile",
+    "change_password": "Change Password",
+    "notifications": "Notifications",
+    "help_support": "Help & Support",
+    "about": "About"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "no_notifications": "No notifications yet",
+    "mark_all_read": "Mark all as read",
+    "clear_all": "Clear all"
+  },
+  "search": {
+    "title": "Search",
+    "search_placeholder": "Search destinations...",
+    "recent_searches": "Recent Searches",
+    "popular_destinations": "Popular Destinations"
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "current": "Current",
+    "total": "Total",
+    "continue": "Continue",
+    "network_error": "Network error. Please check your connection.",
+    "try_again": "Try Again",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit"
+  },
+  "ride": {
+    "new_ride": "New Ride Request",
+    "accept": "Accept",
+    "decline": "Decline",
+    "pickup": "Pickup",
+    "dropoff": "Dropoff",
+    "fare": "Fare",
+    "distance": "Distance",
+    "duration": "Duration",
+    "start_ride": "Start Ride",
+    "end_ride": "End Ride",
+    "ride_completed": "Ride Completed"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "sound": "Sound",
+    "vibration": "Vibration",
+    "auto_accept": "Auto Accept Rides",
+    "max_distance": "Maximum Distance",
+    "fare_preferences": "Fare Preferences"
+  },
+  "welcome": {
+    "title": "Welcome to eRickshaw Driver",
+    "select_language": "Please select your preferred language",
+    "language_selection": "Language Selection"
+  }
+} 

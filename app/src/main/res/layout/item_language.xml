@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="ItemLanguageBinding">
+        <variable name="languageFlag" type="String" />
+        <variable name="languageName" type="String" />
+        <variable name="languageNativeName" type="String" />
+        <variable name="isSelected" type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_12sdp">
+
+        <TextView
+            android:id="@+id/tvLanguageFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{languageFlag}"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="🇺🇸" />
+
+        <TextView
+            android:id="@+id/tvLanguageName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:text="@{languageName}"
+            android:textColor="@color/login_text_black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/ivSelected"
+            app:layout_constraintStart_toEndOf="@+id/tvLanguageFlag"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="English" />
+
+        <TextView
+            android:id="@+id/tvLanguageNativeName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:text="@{languageNativeName}"
+            android:textColor="@color/login_hint_gray"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/ivSelected"
+            app:layout_constraintStart_toEndOf="@+id/tvLanguageFlag"
+            app:layout_constraintTop_toBottomOf="@+id/tvLanguageName"
+            tools:text="English" />
+
+        <ImageView
+            android:id="@+id/ivSelected"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_baseline_check_24"
+            android:visibility="@{isSelected ? android.view.View.VISIBLE : android.view.View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/login_button_blue"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout> 

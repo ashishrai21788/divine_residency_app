@@ -1,0 +1,71 @@
+package com.app.divine.activity.splash.view
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.app.divine.R
+import com.app.divine.databinding.ActivitySignupBinding
+import com.app.core.dagger.preference.AppPreferences
+import com.app.core.dagger.roomdatabase.AppDatabase
+import com.app.core.extensions.showToastS
+import com.app.core.utils.CoreConnectionLiveData
+import com.app.divine.AppApplication
+import com.app.divine.activity.splash.di.DaggerSplashActivityComponent
+import com.app.divine.activity.splash.di.SplashActivityModule
+import com.app.divine.utils.LanguageFlowManager
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import javax.inject.Inject
+
+class SplashActivity: AppCompatActivity() {
+
+    val TAG =  SplashActivity::class.java.simpleName
+
+    @Inject
+    lateinit var appDatabase: AppDatabase
+
+    private lateinit var binding: ActivitySignupBinding
+
+    @Inject
+    lateinit var retrofit: Retrofit
+
+    @Inject
+    lateinit var okHttpClient: OkHttpClient
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var coreConnectionLiveData: CoreConnectionLiveData
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
+        DaggerSplashActivityComponent.builder()
+            .coreComponent((application as AppApplication).coreComponent)
+            .splashActivityModule(SplashActivityModule(this))
+            .build()
+            .inject(this)
+
+        coreConnectionLiveData.observe(this, Observer {
+            if(it){
+                showToastS("active")
+            }else{
+                showToastS("inactive")
+            }
+        })
+        
+        // Check language flow and proceed accordingly
+        checkLanguageFlow()
+    }
+    
+    private fun checkLanguageFlow() {
+        // Add a small delay to show splash screen
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            val nextActivity = LanguageFlowManager.getNextActivityAfterSplash(this)
+            val intent = Intent(this, nextActivity)
+            startActivity(intent)
+            finish()
+        }, 2000) // 2 seconds delay
+    }
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <application
+        android:name="com.app.divine.AppApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DRWA"
+        tools:targetApi="31">
+        <activity
+            android:name="com.app.divine.activity.splash.view.SplashActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DRWA">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.app.divine.activity.language.view.LanguageSelectionActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DRWA" />
+        <activity
+            android:name="com.app.divine.activity.signup.view.SignupActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DRWA"/>
+        <activity
+            android:name="com.app.divine.activity.login.view.LoginActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DRWA"/>
+        <activity
+            android:name="com.app.divine.activity.forgot.view.ForgotPasswordActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DRWA"/>
+        <activity
+            android:name="com.app.divine.activity.landing.view.LandingMainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DRWA"/>
+
+        <activity
+            android:name="com.app.divine.activity.loginSignup.view.LoginSignupActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DRWA"/>
+
+        <activity
+            android:name="com.app.divine.activity.language.view.LanguageSelectionActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DRWA"/>
+
+        <service
+            android:name="com.notification.CustomFirebaseMessagingService"
+            android:exported="false"
+            android:foregroundServiceType="remoteMessaging">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>

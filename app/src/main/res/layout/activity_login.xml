@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="ActivityLoginBinding">
+        <variable name="headline" type="String" />
+        <variable name="subheadline" type="String" />
+        <variable name="email" type="String" />
+        <variable name="password" type="String" />
+        <variable name="emailHint" type="String" />
+        <variable name="passwordHint" type="String" />
+        <variable name="forgotPasswordText" type="String" />
+        <variable name="signInText" type="String" />
+        <variable name="createAccountText" type="String" />
+        <variable name="orContinueWithText" type="String" />
+        <variable name="appBarTitle" type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".activity.login.view.LoginActivity">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+            app:title="@{appBarTitle}"
+            app:titleTextColor="@color/login_signup_text_primary"
+            />
+
+        <TextView
+            android:id="@+id/tvHeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{headline}"
+            android:gravity="center"
+            android:textColor="@color/login_button_blue"
+            android:textSize="22sp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_50sdp"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSubheadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{subheadline}"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:textColor="@color/login_text_black"
+            android:textSize="16sp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@id/tvHeadline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_50sdp"
+            app:boxStrokeColor="@color/login_input_border"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusTopStart="@dimen/_8sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+            app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@id/tvSubheadline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.85">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@{emailHint}"
+                android:text="@={email}"
+                android:textColor="@color/login_text_black"
+                android:textColorHint="@color/login_hint_gray"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:boxStrokeColor="@color/login_input_border"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusTopStart="@dimen/_8sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+            app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.85">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@{passwordHint}"
+                android:text="@={password}"
+                android:textColor="@color/login_text_black"
+                android:textColorHint="@color/login_hint_gray"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{forgotPasswordText}"
+            android:textColor="@color/login_button_blue"
+            android:textSize="14sp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:gravity="end"
+            app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+            app:layout_constraintEnd_toEndOf="@id/passwordInputLayout" />
+
+        <Button
+            android:id="@+id/btnSignIn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_48sdp"
+            android:text="@{signInText}"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/login_button_blue"
+            android:layout_marginTop="@dimen/_24sdp"
+            app:layout_constraintTop_toBottomOf="@id/tvForgotPassword"
+            app:layout_constraintStart_toStartOf="@id/passwordInputLayout"
+            app:layout_constraintEnd_toEndOf="@id/passwordInputLayout" />
+
+        <TextView
+            android:id="@+id/tvCreateAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{createAccountText}"
+            android:textColor="@color/login_text_gray"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintTop_toBottomOf="@id/btnSignIn"
+            app:layout_constraintStart_toStartOf="@id/btnSignIn"
+            app:layout_constraintEnd_toEndOf="@id/btnSignIn" />
+
+        <TextView
+            android:id="@+id/tvOrContinueWith"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{orContinueWithText}"
+            android:textColor="@color/login_text_gray"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            app:layout_constraintTop_toBottomOf="@id/tvCreateAccount"
+            app:layout_constraintStart_toStartOf="@id/tvCreateAccount"
+            app:layout_constraintEnd_toEndOf="@id/tvCreateAccount" />
+
+        <LinearLayout
+            android:id="@+id/socialRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@id/tvOrContinueWith"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/ivGoogle"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_google"
+                android:background="@drawable/ic_launcher_background"
+                android:padding="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:contentDescription="Google" />
+
+            <ImageView
+                android:id="@+id/ivFacebook"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_facebook"
+                android:background="@drawable/ic_launcher_background"
+                android:padding="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:contentDescription="Facebook" />
+
+            <ImageView
+                android:id="@+id/ivApple"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_apple"
+                android:background="@drawable/ic_launcher_background"
+                android:padding="@dimen/_8sdp"
+                android:contentDescription="Apple" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

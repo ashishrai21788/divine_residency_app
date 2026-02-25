@@ -1,0 +1,120 @@
+{
+  "app_name": "سائق الإريكشا",
+  "login": {
+    "title": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "forgot_password": "نسيت كلمة المرور؟",
+    "login_button": "تسجيل الدخول",
+    "signup_link": "ليس لديك حساب؟ سجل الآن",
+    "email_required": "البريد الإلكتروني مطلوب",
+    "password_required": "كلمة المرور مطلوبة",
+    "invalid_email": "يرجى إدخال بريد إلكتروني صحيح",
+    "login_success": "تم تسجيل الدخول بنجاح",
+    "login_failed": "فشل تسجيل الدخول"
+  },
+  "signup": {
+    "title": "إنشاء حساب",
+    "full_name": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "password": "كلمة المرور",
+    "confirm_password": "تأكيد كلمة المرور",
+    "signup_button": "إنشاء حساب",
+    "login_link": "لديك حساب بالفعل؟ تسجيل الدخول",
+    "name_required": "الاسم الكامل مطلوب",
+    "phone_required": "رقم الهاتف مطلوب",
+    "password_mismatch": "كلمات المرور غير متطابقة",
+    "signup_success": "تم إنشاء الحساب بنجاح"
+  },
+  "forgot_password": {
+    "title": "نسيت كلمة المرور",
+    "description": "أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور",
+    "email": "البريد الإلكتروني",
+    "reset_button": "إعادة تعيين كلمة المرور",
+    "back_to_login": "العودة لتسجيل الدخول",
+    "reset_sent": "تم إرسال بريد إعادة تعيين كلمة المرور"
+  },
+  "home": {
+    "title": "الرئيسية",
+    "welcome": "مرحباً",
+    "total_rides": "إجمالي الرحلات",
+    "earnings": "الأرباح",
+    "rating": "التقييم",
+    "online_status": "حالة الاتصال",
+    "go_online": "اتصل بالإنترنت",
+    "go_offline": "افصل عن الإنترنت"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "personal_info": "المعلومات الشخصية",
+    "vehicle_info": "معلومات المركبة",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج",
+    "edit_profile": "تعديل الملف الشخصي",
+    "change_password": "تغيير كلمة المرور",
+    "notifications": "الإشعارات",
+    "help_support": "المساعدة والدعم",
+    "about": "حول"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "no_notifications": "لا توجد إشعارات بعد",
+    "mark_all_read": "تحديد الكل كمقروء",
+    "clear_all": "مسح الكل"
+  },
+  "search": {
+    "title": "البحث",
+    "search_placeholder": "البحث عن الوجهات...",
+    "recent_searches": "البحوث الحديثة",
+    "popular_destinations": "الوجهات الشائعة"
+  },
+  "common": {
+    "ok": "موافق",
+    "cancel": "إلغاء",
+    "yes": "نعم",
+    "no": "لا",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "current": "الحالي",
+    "total": "المجموع",
+    "continue": "متابعة",
+    "network_error": "خطأ في الشبكة. يرجى التحقق من اتصالك.",
+    "try_again": "حاول مرة أخرى",
+    "back": "رجوع",
+    "next": "التالي",
+    "submit": "إرسال"
+  },
+  "ride": {
+    "new_ride": "طلب رحلة جديدة",
+    "accept": "قبول",
+    "decline": "رفض",
+    "pickup": "نقطة الانطلاق",
+    "dropoff": "نقطة الوصول",
+    "fare": "الأجرة",
+    "distance": "المسافة",
+    "duration": "المدة",
+    "start_ride": "بدء الرحلة",
+    "end_ride": "إنهاء الرحلة",
+    "ride_completed": "تم إكمال الرحلة"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "language": "اللغة",
+    "theme": "المظهر",
+    "sound": "الصوت",
+    "vibration": "الاهتزاز",
+    "auto_accept": "قبول الرحلات تلقائياً",
+    "max_distance": "أقصى مسافة",
+    "fare_preferences": "تفضيلات الأجرة"
+  },
+  "welcome": {
+    "title": "مرحباً بك في تطبيق سائق الإريكشا",
+    "select_language": "يرجى اختيار لغتك المفضلة",
+    "language_selection": "اختيار اللغة"
+  }
+} 

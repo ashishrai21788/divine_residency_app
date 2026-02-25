@@ -1,0 +1,120 @@
+{
+  "app_name": "ई-रिक्शा ड्राइवर",
+  "login": {
+    "title": "लॉगिन",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "forgot_password": "पासवर्ड भूल गए?",
+    "login_button": "लॉगिन करें",
+    "signup_link": "खाता नहीं है? साइन अप करें",
+    "email_required": "ईमेल आवश्यक है",
+    "password_required": "पासवर्ड आवश्यक है",
+    "invalid_email": "कृपया वैध ईमेल दर्ज करें",
+    "login_success": "लॉगिन सफल",
+    "login_failed": "लॉगिन विफल"
+  },
+  "signup": {
+    "title": "साइन अप",
+    "full_name": "पूरा नाम",
+    "email": "ईमेल",
+    "phone": "फोन नंबर",
+    "password": "पासवर्ड",
+    "confirm_password": "पासवर्ड की पुष्टि करें",
+    "signup_button": "साइन अप करें",
+    "login_link": "पहले से खाता है? लॉगिन करें",
+    "name_required": "पूरा नाम आवश्यक है",
+    "phone_required": "फोन नंबर आवश्यक है",
+    "password_mismatch": "पासवर्ड मेल नहीं खाते",
+    "signup_success": "खाता सफलतापूर्वक बनाया गया"
+  },
+  "forgot_password": {
+    "title": "पासवर्ड भूल गए",
+    "description": "अपना पासवर्ड रीसेट करने के लिए अपना ईमेल दर्ज करें",
+    "email": "ईमेल",
+    "reset_button": "पासवर्ड रीसेट करें",
+    "back_to_login": "लॉगिन पर वापस जाएं",
+    "reset_sent": "पासवर्ड रीसेट ईमेल भेजा गया"
+  },
+  "home": {
+    "title": "होम",
+    "welcome": "स्वागत है",
+    "total_rides": "कुल सवारी",
+    "earnings": "कमाई",
+    "rating": "रेटिंग",
+    "online_status": "ऑनलाइन स्थिति",
+    "go_online": "ऑनलाइन जाएं",
+    "go_offline": "ऑफलाइन जाएं"
+  },
+  "profile": {
+    "title": "प्रोफाइल",
+    "personal_info": "व्यक्तिगत जानकारी",
+    "vehicle_info": "वाहन जानकारी",
+    "settings": "सेटिंग्स",
+    "logout": "लॉगआउट",
+    "edit_profile": "प्रोफाइल संपादित करें",
+    "change_password": "पासवर्ड बदलें",
+    "notifications": "सूचनाएं",
+    "help_support": "सहायता और समर्थन",
+    "about": "के बारे में"
+  },
+  "notifications": {
+    "title": "सूचनाएं",
+    "no_notifications": "अभी तक कोई सूचना नहीं",
+    "mark_all_read": "सभी को पढ़ा हुआ चिह्नित करें",
+    "clear_all": "सभी साफ़ करें"
+  },
+  "search": {
+    "title": "खोज",
+    "search_placeholder": "गंतव्य खोजें...",
+    "recent_searches": "हाल की खोजें",
+    "popular_destinations": "लोकप्रिय गंतव्य"
+  },
+  "common": {
+    "ok": "ठीक है",
+    "cancel": "रद्द करें",
+    "yes": "हाँ",
+    "no": "नहीं",
+    "save": "सहेजें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "success": "सफलता",
+    "current": "वर्तमान",
+    "total": "कुल",
+    "continue": "जारी रखें",
+    "network_error": "नेटवर्क त्रुटि। कृपया अपना कनेक्शन जांचें।",
+    "try_again": "पुनः प्रयास करें",
+    "back": "वापस",
+    "next": "अगला",
+    "submit": "सबमिट करें"
+  },
+  "ride": {
+    "new_ride": "नई सवारी अनुरोध",
+    "accept": "स्वीकार करें",
+    "decline": "अस्वीकार करें",
+    "pickup": "पिकअप",
+    "dropoff": "ड्रॉपऑफ",
+    "fare": "किराया",
+    "distance": "दूरी",
+    "duration": "अवधि",
+    "start_ride": "सवारी शुरू करें",
+    "end_ride": "सवारी समाप्त करें",
+    "ride_completed": "सवारी पूरी हुई"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "language": "भाषा",
+    "theme": "थीम",
+    "sound": "ध्वनि",
+    "vibration": "कंपन",
+    "auto_accept": "स्वचालित रूप से सवारी स्वीकार करें",
+    "max_distance": "अधिकतम दूरी",
+    "fare_preferences": "किराया प्राथमिकताएं"
+  },
+  "welcome": {
+    "title": "ई-रिक्शा ड्राइवर में आपका स्वागत है",
+    "select_language": "कृपया अपनी पसंदीदा भाषा चुनें",
+    "language_selection": "भाषा चयन"
+  }
+} 
