@@ -59,7 +59,6 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.support.annotations)
     kapt(libs.androidx.room.compiler)
-    kapt(libs.compiler)
     implementation(libs.sdp.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

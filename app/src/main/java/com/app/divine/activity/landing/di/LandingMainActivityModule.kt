@@ -6,6 +6,7 @@ import com.app.core.dagger.roomdatabase.AppDatabase
 import com.app.core.extensions.ui.getViewModel
 import com.app.divine.activity.landing.view.LandingMainActivity
 import com.app.divine.activity.landing.viewmodel.LandingMainViewModel
+import com.app.core.dagger.qualifier.DefaultRetrofit
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -23,7 +24,7 @@ class LandingMainActivityModule(
     @LandingMainActivityScope
     @Provides
     fun provideViewModel(appDatabase: AppDatabase,
-                         retrofit: Retrofit,
+                         @DefaultRetrofit retrofit: Retrofit,
                          okHttpClient: OkHttpClient,
                          appPreferences: AppPreferences,
                          context: Context

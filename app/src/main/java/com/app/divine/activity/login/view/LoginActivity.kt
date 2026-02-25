@@ -14,15 +14,17 @@ import com.app.core.extensions.showToastS
 import com.app.core.extensions.validateEmail
 import com.app.divine.AppApplication
 import com.app.divine.activity.forgot.view.ForgotPasswordActivity
-import com.app.divine.activity.landing.view.LandingMainActivity
+import com.app.divine.navigation.VillaRoleRouter
 import com.app.divine.activity.language.view.LanguageSelectionActivity
 import com.app.divine.activity.login.di.DaggerLoginActivityComponent
 import com.app.divine.activity.login.di.LoginActivityModule
 import com.app.divine.activity.login.viewmodel.LoginViewModel
+import com.app.divine.api.ApiResult
 import com.app.divine.activity.signup.view.SignupActivity
 import com.app.divine.utils.LanguageManager
 import com.app.divine.utils.setTitleFromLanguage
 import com.app.divine.utils.BaseLanguageActivity
+import com.app.core.dagger.qualifier.DefaultRetrofit
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -38,6 +40,7 @@ class LoginActivity : BaseLanguageActivity() {
     lateinit var binding: ActivityLoginBinding
 
     @Inject
+    @field:DefaultRetrofit
     lateinit var retrofit: Retrofit
 
     @Inject
@@ -78,13 +81,19 @@ class LoginActivity : BaseLanguageActivity() {
     }
 
     private fun observeLoginResult() {
-        viewModel.loginResult.observe(this) { response ->
-            val success = response.optBoolean("success", false)
-            val message = response.optString(
-                "message",
-                if (success) "Login successful!" else "Login failed. Invalid credentials."
-            )
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        viewModel.villaLoginResult.observe(this) { result ->
+            when (result) {
+                is ApiResult.Loading -> { /* optional: show progress */ }
+                is ApiResult.Success -> {
+                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                    (application as? AppApplication)?.sendFcmTokenToBackendIfLoggedIn()
+                    startActivity(VillaRoleRouter.getPostLoginIntent(this, appPreferences))
+                    finish()
+                }
+                is ApiResult.Error -> {
+                    Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
@@ -113,15 +122,13 @@ class LoginActivity : BaseLanguageActivity() {
         }
 
         binding.btnSignIn.clickWithDebounce {
-            launcher.launch(Intent(this, LandingMainActivity::class.java))
-
-//            if (isLoginValidated()) {
-//                val email = binding.etEmail.text.toString().trim()
-//                val password = binding.etPassword.text.toString().trim()
-//                callLoginApi(email, password)
-//            } else {
-//                Toast.makeText(this, "Invalid Data", Toast.LENGTH_SHORT).show()
-//            }
+            if (isLoginValidated()) {
+                val email = binding.etEmail.text.toString().trim()
+                val password = binding.etPassword.text.toString().trim()
+                callLoginApi(email, password)
+            } else {
+                Toast.makeText(this, "Invalid Data", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data class="ProfileFragmentBinding">
-
-    </data>
-    <FrameLayout
+    <data class="ProfileFragmentBinding"></data>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
-
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:orientation="vertical">
         <TextView
+            android:id="@+id/tvProfileTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile"
-            android:layout_gravity="center" />
-    </FrameLayout>
+            android:text="Profile" />
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Log out" />
+    </LinearLayout>
 </layout>

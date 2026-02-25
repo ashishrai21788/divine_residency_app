@@ -1,0 +1,645 @@
+{
+  "info": {
+    "name": "Villa Society Management API",
+    "description": "NestJS backend for Villa Society: auth, societies, villas, floors, gates, guards, visitors, deliveries, billing, SOS, complaints, notices, expenses, staff, reports. Use {{baseUrl}}/api as base. Set accessToken after login (Auth → Login).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{accessToken}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "accessToken", "value": "" },
+    { "key": "refreshToken", "value": "" },
+    { "key": "society_id", "value": "" },
+    { "key": "villa_id", "value": "" },
+    { "key": "floor_id", "value": "" },
+    { "key": "gate_id", "value": "" },
+    { "key": "user_id", "value": "" },
+    { "key": "visitor_id", "value": "" },
+    { "key": "delivery_id", "value": "" },
+    { "key": "billing_id", "value": "" },
+    { "key": "complaint_id", "value": "" },
+    { "key": "notice_id", "value": "" },
+    { "key": "blacklist_id", "value": "" },
+    { "key": "guard_id", "value": "" },
+    { "key": "staff_id", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Login (email/username/mobile + password), change password, refresh token, profile. Login and Refresh Token do not require Bearer.",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login",
+            "description": "Admin: email + password. Guard: username + password. Resident: mobile + password. Saves accessToken to collection variable for other requests.",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "if (pm.response.code === 201 || pm.response.code === 200) {",
+                    "    const json = pm.response.json();",
+                    "    if (json.accessToken) {",
+                    "        pm.collectionVariables.set('accessToken', json.accessToken);",
+                    "        if (json.refreshToken) pm.collectionVariables.set('refreshToken', json.refreshToken);",
+                    "    }",
+                    "}"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/refresh-token"
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"password123\",\n  \"newPassword\": \"newpassword123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/change-password"
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/auth/profile"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": "{{baseUrl}}/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Societies",
+      "description": "Admin only.",
+      "item": [
+        {
+          "name": "Create Society",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sunrise Villa Society\",\n  \"address\": \"123 Main Road\",\n  \"city\": \"Mumbai\",\n  \"state\": \"Maharashtra\",\n  \"pincode\": \"400001\"\n}"
+            },
+            "url": "{{baseUrl}}/api/societies"
+          }
+        },
+        {
+          "name": "List Societies",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/societies" }
+        },
+        {
+          "name": "Get Society by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/societies/{{society_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Villas",
+      "item": [
+        {
+          "name": "Create Villa",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"villa_number\": \"V-1\",\n  \"lane\": \"A\",\n  \"total_floors\": 2,\n  \"primary_billing_floor_id\": \"\"\n}"
+            },
+            "url": "{{baseUrl}}/api/villas"
+          }
+        },
+        {
+          "name": "List Villas",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/villas?society_id={{society_id}}" }
+        },
+        {
+          "name": "Update Villa",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"villa_number\": \"V-1\",\n  \"lane\": \"A\",\n  \"total_floors\": 2,\n  \"primary_billing_floor_id\": \"\"\n}"
+            },
+            "url": "{{baseUrl}}/api/villas/{{villa_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Floors",
+      "item": [
+        {
+          "name": "Create Floor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"villa_id\": \"{{villa_id}}\",\n  \"floor_name\": \"GF\",\n  \"owner_name\": \"John\",\n  \"tenant_name\": \"\",\n  \"contact_number\": \"9876543210\",\n  \"is_occupied\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/floors"
+          }
+        },
+        {
+          "name": "List Floors",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/floors?society_id={{society_id}}&villa_id={{villa_id}}" }
+        },
+        {
+          "name": "Update Floor",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"floor_name\": \"GF\",\n  \"owner_name\": \"John\",\n  \"tenant_name\": \"\",\n  \"contact_number\": \"9876543210\",\n  \"is_occupied\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/floors/{{floor_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gates",
+      "item": [
+        {
+          "name": "Create Gate",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Main Gate\",\n  \"location\": \"North\"\n}"
+            },
+            "url": "{{baseUrl}}/api/gates"
+          }
+        },
+        {
+          "name": "List Gates",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/gates?society_id={{society_id}}" }
+        },
+        {
+          "name": "Get Gate by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/gates/{{gate_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Guards",
+      "item": [
+        {
+          "name": "Create Guard",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{user_id}}\",\n  \"gate_id\": \"{{gate_id}}\",\n  \"shift_start\": \"08:00\",\n  \"shift_end\": \"20:00\"\n}"
+            },
+            "url": "{{baseUrl}}/api/guards"
+          }
+        },
+        {
+          "name": "List Guards",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/guards?society_id={{society_id}}&gate_id={{gate_id}}" }
+        },
+        {
+          "name": "Get Guard by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/guards/{{guard_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "description": "Admin: create users (role: ADMIN, RESIDENT, GUARD).",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"RESIDENT\",\n  \"email\": \"\",\n  \"username\": \"\",\n  \"mobile\": \"9876543210\",\n  \"password\": \"password123\",\n  \"name\": \"Resident One\",\n  \"society_id\": \"{{society_id}}\",\n  \"villa_id\": \"{{villa_id}}\",\n  \"floor_id\": \"{{floor_id}}\",\n  \"gate_id\": \"\"\n}"
+            },
+            "url": "{{baseUrl}}/api/users"
+          }
+        },
+        {
+          "name": "List Users",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/users?society_id={{society_id}}" }
+        },
+        {
+          "name": "Get User by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/users/{{user_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Visitors",
+      "item": [
+        {
+          "name": "Register Visitor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Guest Name\",\n  \"phone\": \"9999888877\",\n  \"photo_url\": \"\",\n  \"villa_id\": \"{{villa_id}}\",\n  \"floor_id\": \"{{floor_id}}\",\n  \"gate_id\": \"{{gate_id}}\",\n  \"purpose\": \"Meeting\",\n  \"vehicle_number\": \"\"\n}"
+            },
+            "url": "{{baseUrl}}/api/visitors"
+          }
+        },
+        {
+          "name": "Approve Visitor",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/visitors/{{visitor_id}}/approve" }
+        },
+        {
+          "name": "Reject Visitor",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/visitors/{{visitor_id}}/reject" }
+        },
+        {
+          "name": "Mark Visitor Exit",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/visitors/{{visitor_id}}/exit" }
+        },
+        {
+          "name": "Visitor Logs",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/visitors/logs?society_id={{society_id}}&floor_id=&status=" }
+        }
+      ]
+    },
+    {
+      "name": "Deliveries",
+      "item": [
+        {
+          "name": "Create Delivery",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Parcel\",\n  \"villa_id\": \"{{villa_id}}\",\n  \"floor_id\": \"{{floor_id}}\",\n  \"gate_id\": \"{{gate_id}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/deliveries"
+          }
+        },
+        {
+          "name": "Mark Received",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/deliveries/{{delivery_id}}/received" }
+        },
+        {
+          "name": "List Deliveries",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/deliveries?floor_id={{floor_id}}&society_id={{society_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Staff",
+      "item": [
+        {
+          "name": "Create Staff",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Staff Name\",\n  \"contact_number\": \"9876543210\",\n  \"assigned_floors\": []\n}"
+            },
+            "url": "{{baseUrl}}/api/staff"
+          }
+        },
+        {
+          "name": "List Staff",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/staff?society_id={{society_id}}" }
+        },
+        {
+          "name": "Get Staff by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/staff/{{staff_id}}" }
+        },
+        {
+          "name": "Staff Attendance",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/staff/{{staff_id}}/attendance" }
+        }
+      ]
+    },
+    {
+      "name": "Expenses",
+      "item": [
+        {
+          "name": "Create Expense",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"SECURITY\",\n  \"amount\": 5000,\n  \"description\": \"Monthly security\",\n  \"expense_date\": \"2025-02-01\"\n}"
+            },
+            "url": "{{baseUrl}}/api/expenses"
+          }
+        },
+        {
+          "name": "Add Expense (month/year)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"expense_type\": \"SECURITY\",\n  \"amount\": 5000,\n  \"month\": 2,\n  \"year\": 2025,\n  \"description\": \"Security Feb\"\n}"
+            },
+            "url": "{{baseUrl}}/api/expenses/add"
+          }
+        },
+        {
+          "name": "List Expenses",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/expenses?society_id={{society_id}}&type=SECURITY&year=2025&month=2" }
+        },
+        {
+          "name": "Expense Summary",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/expenses/summary?society_id={{society_id}}&year=2025&month=2" }
+        },
+        {
+          "name": "Expense Types Breakdown",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/expenses/types-breakdown?society_id={{society_id}}&year=2025&month=2" }
+        }
+      ]
+    },
+    {
+      "name": "Billing",
+      "item": [
+        {
+          "name": "Generate Bills",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/billing/generate?year=2025&month=2" }
+        },
+        {
+          "name": "List Billings",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/billing?society_id={{society_id}}&villa_id=&year=&month=" }
+        },
+        {
+          "name": "Pending Bills",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/billing/pending?society_id={{society_id}}" }
+        },
+        {
+          "name": "Defaulters",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/billing/defaulters?society_id={{society_id}}" }
+        },
+        {
+          "name": "Bills by Villa",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/billing/villa/{{villa_id}}?month=2&year=2025" }
+        },
+        {
+          "name": "Mark Bill Paid",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/billing/{{billing_id}}/paid" }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Collect Payment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"villa_id\": \"{{villa_id}}\",\n  \"month\": 2,\n  \"year\": 2025,\n  \"amount_paid\": 1500,\n  \"payment_mode\": \"UPI\",\n  \"transaction_reference\": \"TXN123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/payments/collect"
+          }
+        }
+      ]
+    },
+    {
+      "name": "My Bills",
+      "description": "Resident: my bills and payments.",
+      "item": [
+        {
+          "name": "My Bills",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/my/bills?society_id={{society_id}}" }
+        },
+        {
+          "name": "My Pending Bills",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/my/bills/pending?society_id={{society_id}}" }
+        },
+        {
+          "name": "My Payments",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/my/payments?society_id={{society_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "SOS",
+      "item": [
+        {
+          "name": "Trigger SOS",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/sos/trigger"
+          }
+        },
+        {
+          "name": "List SOS",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/sos?society_id={{society_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Complaints",
+      "item": [
+        {
+          "name": "Create Complaint",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"villa_id\": \"{{villa_id}}\",\n  \"floor_id\": \"{{floor_id}}\",\n  \"category\": \"SECURITY\",\n  \"title\": \"Issue title\",\n  \"description\": \"Details\",\n  \"photo_url\": \"\"\n}"
+            },
+            "url": "{{baseUrl}}/api/complaints"
+          }
+        },
+        {
+          "name": "My Complaints",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/complaints/my?society_id={{society_id}}" }
+        },
+        {
+          "name": "List Complaints (Admin)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/complaints?society_id={{society_id}}&status=&category=" }
+        },
+        {
+          "name": "Assign Complaint",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"assigned_to\": \"{{user_id}}\"\n}" },
+            "url": "{{baseUrl}}/api/complaints/{{complaint_id}}/assign"
+          }
+        },
+        {
+          "name": "Update Complaint Status",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"IN_PROGRESS\",\n  \"resolution_notes\": \"\"\n}"
+            },
+            "url": "{{baseUrl}}/api/complaints/{{complaint_id}}/update-status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notices",
+      "item": [
+        {
+          "name": "Create Notice",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Meeting Notice\",\n  \"content\": \"AGM on 1st March.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/notices"
+          }
+        },
+        {
+          "name": "List Notices",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/notices?society_id={{society_id}}" }
+        },
+        {
+          "name": "Get Notice by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/notices/{{notice_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Blacklist",
+      "item": [
+        {
+          "name": "Add to Blacklist",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Blacklisted Person\",\n  \"phone\": \"9999888877\",\n  \"photo_url\": \"\",\n  \"vehicle_number\": \"\",\n  \"reason\": \"Unauthorized entry\"\n}"
+            },
+            "url": "{{baseUrl}}/api/blacklist"
+          }
+        },
+        {
+          "name": "List Blacklist",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/blacklist?society_id={{society_id}}" }
+        },
+        {
+          "name": "Deactivate Blacklist Entry",
+          "request": { "method": "PUT", "url": "{{baseUrl}}/api/blacklist/{{blacklist_id}}/deactivate" }
+        },
+        {
+          "name": "Delete Blacklist Entry",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/blacklist/{{blacklist_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Guard Attendance",
+      "item": [
+        {
+          "name": "Check In",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"check_in_photo_url\": \"\"\n}" },
+            "url": "{{baseUrl}}/api/guard/attendance/check-in"
+          }
+        },
+        {
+          "name": "Check Out",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"check_out_photo_url\": \"\"\n}" },
+            "url": "{{baseUrl}}/api/guard/attendance/check-out"
+          }
+        },
+        {
+          "name": "List Attendance",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/guard/attendance?from=2025-02-01&to=2025-02-28" }
+        },
+        {
+          "name": "Attendance Summary",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/guard/attendance/summary?from=2025-02-01&to=2025-02-28" }
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "description": "Finance reports.",
+      "item": [
+        {
+          "name": "Monthly Report",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/reports/finance/monthly?society_id={{society_id}}&year=2025&month=2" }
+        },
+        {
+          "name": "Collections Report",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/reports/finance/collections?society_id={{society_id}}&year=2025&month=2" }
+        },
+        {
+          "name": "Defaulters Report",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/reports/finance/defaulters?society_id={{society_id}}" }
+        },
+        {
+          "name": "Expense vs Collection",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/reports/finance/expense-vs-collection?society_id={{society_id}}&year=2025" }
+        }
+      ]
+    }
+  ]
+}

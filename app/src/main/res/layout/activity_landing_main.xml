@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             style="@style/BottomNavigationViewStyle"
-            app:menu="@menu/bottom_nav_menu"
+            app:menu="@menu/bottom_nav_menu_resident"
             android:padding="@dimen/_5sdp"
             app:itemIconTint="@color/bottom_nav_selector"
             app:itemTextColor="@color/bottom_nav_selector"

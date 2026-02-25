@@ -29,6 +29,7 @@ class SignupActivity: BaseLanguageActivity() {
     private lateinit var binding: ActivitySignupBinding
 
     @Inject
+    @field:com.app.core.dagger.qualifier.DefaultRetrofit
     lateinit var retrofit: Retrofit
 
     @Inject

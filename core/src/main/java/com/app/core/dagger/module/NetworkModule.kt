@@ -4,6 +4,10 @@ import android.content.Context
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.app.core.dagger.APIServices
+import com.app.core.dagger.preference.AppPreferences
+import com.app.core.dagger.qualifier.DefaultRetrofit
+import com.app.core.dagger.qualifier.VillaSociety
+import com.app.core.network.VillaSocietyAuthInterceptor
 import com.app.core.utils.CoreConnectionLiveData
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
@@ -22,8 +26,50 @@ class NetworkModule() {
     private var READ_TIMEOUT: Long = 3 * 60L
     private var WRITE_TIMEOUT: Long = 3 * 60L
 
+    /** Base URL for Villa Society API (trailing slash). Keep in sync with app VillaSocietyConfig.API_BASE_URL_WITH_PATH. */
+    private val villaSocietyBaseUrl: String = "http://localhost:3000/api/"
+
     @Singleton
     @Provides
+    fun villaSocietyAuthInterceptor(appPreferences: AppPreferences): VillaSocietyAuthInterceptor =
+        VillaSocietyAuthInterceptor(appPreferences)
+
+    @Singleton
+    @Provides
+    @VillaSociety
+    fun villaSocietyOkHttpClient(
+        stethoInterceptor: StethoInterceptor,
+        villaSocietyAuthInterceptor: VillaSocietyAuthInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addNetworkInterceptor(stethoInterceptor)
+            .addInterceptor(villaSocietyAuthInterceptor)
+            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(false)
+            .build()
+    }
+
+    @Singleton
+    @VillaSociety
+    @Provides
+    fun villaSocietyRetrofit(@VillaSociety villaSocietyOkHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(villaSocietyBaseUrl)
+            .addConverterFactory(
+                retrofit2.converter.gson.GsonConverterFactory.create(
+                    GsonBuilder().setLenient().create()
+                )
+            )
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(villaSocietyOkHttpClient)
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    @DefaultRetrofit
     fun retrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.github.com/")
@@ -60,7 +106,7 @@ class NetworkModule() {
 
     @Singleton
     @Provides
-    fun provideRetrofitAPIServices(retrofit: Retrofit): APIServices {
+    fun provideRetrofitAPIServices(@DefaultRetrofit retrofit: Retrofit): APIServices {
         return retrofit.create(APIServices::class.java)
     }
 

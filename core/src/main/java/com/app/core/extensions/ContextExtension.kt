@@ -281,7 +281,7 @@ fun <T> Context.showConfirmationDialogForLink(
     icon: Boolean,
     isSingleBtn: Boolean,
     data: T,
-    alertDialogListerner: AlertDialogListernerLink,
+    alertDialogListener: AlertDialogListenerLink,
     viewButtonText: String? = null
 ) {
 
@@ -299,11 +299,11 @@ fun <T> Context.showConfirmationDialogForLink(
 
     val defaultViewButtonText = "View"
     alertDialog.setNegativeButton(viewButtonText ?: defaultViewButtonText) { _, _ ->
-        alertDialogListerner.onViewClick(actionType, data)
+        alertDialogListener.onViewClick(actionType, data)
     }
 
     alertDialog.setPositiveButton(actionBtn) { _, _ ->
-        alertDialogListerner.onOkClick(actionType, data)
+        alertDialogListener.onOkClick(actionType, data)
     }
 
     // A null listener allows the button to dismiss the dialog and take no further action.
@@ -311,7 +311,7 @@ fun <T> Context.showConfirmationDialogForLink(
 //            alertDialog.setNegativeButton("", null)
 //        } else {
 //            alertDialog.setNegativeButton(android.R.string.no, { dialog, which ->
-//                alertDialogListerner.onOkClick(actionType, data)
+//                alertDialogListener.onOkClick(actionType, data)
 //            })
 //        }
     if (icon && status) {
@@ -333,7 +333,7 @@ fun <T> Context.showConfirmationDialogForLink(
     isSingleBtn: Boolean,
     cancelButton: String,
     data: T,
-    alertDialogListerner: AlertDialogListernerLink
+    alertDialogListener: AlertDialogListenerLink
 ) {
 
     val status = false
@@ -348,12 +348,12 @@ fun <T> Context.showConfirmationDialogForLink(
     // Specifying a listener allows you to take an action before dismissing the dialog.
     // The dialog is automatically dismissed when a dialog button is clicked.
     alertDialog.setPositiveButton(actionBtn, DialogInterface.OnClickListener { dialog, which ->
-        alertDialogListerner.onOkClick(actionType, data)
+        alertDialogListener.onOkClick(actionType, data)
     })
 
 
     alertDialog.setNegativeButton(cancelButton) { dialog, which ->
-        alertDialogListerner.onViewClick(actionType, data)
+        alertDialogListener.onViewClick(actionType, data)
 
     }
 
@@ -363,7 +363,7 @@ fun <T> Context.showConfirmationDialogForLink(
 //            alertDialog.setNegativeButton("", null)
 //        } else {
 //            alertDialog.setNegativeButton(android.R.string.no, { dialog, which ->
-//                alertDialogListerner.onOkClick(actionType, data)
+//                alertDialogListener.onOkClick(actionType, data)
 //            })
 //        }
     if (icon && status) {

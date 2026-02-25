@@ -8,8 +8,15 @@ import com.app.core.dagger.component.DaggerCoreComponent
 import com.app.core.dagger.module.ContextModule
 import com.app.core.dagger.module.NetworkModule
 import com.app.core.utils.CoreComponentProvider
+import com.app.divine.api.villa.VillaAuthApi
+import com.app.divine.notification.VillaFcmHandler
+import com.app.divine.notification.VillaNotificationChannels
+import com.app.divine.realtime.VillaSocketManager
+import com.app.divine.repository.VillaAuthRepository
 import com.app.divine.utils.LanguageManager
 import com.app.divine.utils.SimpleLifecycleLogger
+import com.google.firebase.messaging.FirebaseMessaging
+
 import com.notification.FirebaseNotificationManager
 import com.notification.models.NotificationData
 
@@ -19,65 +26,76 @@ class AppApplication : Application(), CoreComponentProvider {
 
     override fun onCreate() {
         super.onCreate()
-        // Initialize Dagger with temporary implementation
         coreComponent =
             DaggerCoreComponent.builder().contextModule(ContextModule(this)).networkModule(
                 NetworkModule()
             ).build()
 
-        // Initialize LanguageManager
         LanguageManager.initialize(this)
-
-        // Initialize SimpleLifecycleLogger
         SimpleLifecycleLogger.getInstance().initialize(this)
 
-        // Initialize FirebaseNotificationManager here
+        // Villa Society notification channels (Phase 5)
+        VillaNotificationChannels.createAll(this)
+
         FirebaseNotificationManager.getInstance().initialize(applicationContext, object : FirebaseNotificationManager.NotificationCallback {
             override fun onMessageReceived(notificationData: NotificationData) {
                 Log.d("FCM_Callback", "onMessageReceived: ${notificationData.title}")
-                // Handle foreground notification
+                VillaFcmHandler.onForegroundMessage(this@AppApplication, notificationData)
             }
 
             override fun onBackgroundMessageReceived(notificationData: NotificationData) {
                 Log.d("FCM_Callback", "onBackgroundMessageReceived: ${notificationData.title}")
-                // Handle background data messages or when showSystemNotification is false
             }
 
             override fun onDataMessageReceived(notificationData: NotificationData) {
                 Log.d("FCM_Callback", "onDataMessageReceived: ${notificationData.data}")
-                // Handle data messages
             }
 
             override fun onNewToken(token: String) {
                 Log.d("FCM_Callback", "onNewToken: $token")
-                // Handle new token, e.g., send to backend
-                sendPushToken("", token) // Use the existing method to send token to backend
+                sendPushTokenToBackend(token)
             }
 
             override fun onNotificationAction(action: String, data: Map<String, String>) {
                 Log.d("FCM_Callback", "onNotificationAction: $action with data $data")
-                // Handle notification action clicks
             }
 
             override fun onNotificationClicked(notificationData: NotificationData) {
                 Log.d("FCM_Callback", "onNotificationClicked: ${notificationData.title}")
-                // Handle notification body clicks, potentially navigate the user
+                VillaFcmHandler.onNotificationClicked(this@AppApplication, coreComponent.appPreferences(), notificationData)
             }
 
             override fun onTokenReceived(token: String) {
-                Log.d("FCM_Callback", "onNotificationClicked: ${token}")
+                Log.d("FCM_Callback", "onTokenReceived: $token")
             }
 
             override fun onError(error: String) {
                 Log.e("FCM_Callback", "onError: $error")
-                // Handle errors from the SDK
             }
         })
-
     }
 
-    private fun sendPushToken(string: String, token: String) {
+    /** Send FCM token to backend when logged in. Call from onNewToken and after login success. */
+    private fun sendPushTokenToBackend(token: String) {
+        if (!coreComponent.appPreferences().getLogin()) return
+        val api = coreComponent.villaSocietyRetrofit().create(VillaAuthApi::class.java)
+        VillaAuthRepository(api, coreComponent.appPreferences()).registerFcmToken(token)
+    }
 
+    /** Call after login success to register current FCM token with backend. */
+    fun sendFcmTokenToBackendIfLoggedIn() {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+            sendPushTokenToBackend(token)
+        }
+    }
+
+    private var _villaSocketManager: VillaSocketManager? = null
+    /** Realtime socket (Phase 6). Connect when on Resident/Guard screen; disconnect on logout. */
+    fun getVillaSocketManager(): VillaSocketManager {
+        if (_villaSocketManager == null) {
+            _villaSocketManager = VillaSocketManager(coreComponent.appPreferences(), coreComponent.okHttpClient())
+        }
+        return _villaSocketManager!!
     }
 
     override fun provideCoreComponent(): CoreComponent {
@@ -85,7 +103,14 @@ class AppApplication : Application(), CoreComponentProvider {
     }
 
     override fun forceLoggedOut() {
-        TODO("Not yet implemented")
+        getVillaSocketManager().disconnect()
+    }
+
+    /** Call from Profile (or any logout UI): clears Villa auth, FCM token removal, disconnects socket. Caller should then start LoginActivity and finish. */
+    fun performLogout() {
+        val api = coreComponent.villaSocietyRetrofit().create(com.app.divine.api.villa.VillaAuthApi::class.java)
+        VillaAuthRepository(api, coreComponent.appPreferences()).logout()
+        forceLoggedOut()
     }
 
     override fun logFacebookEvent(name: String?) {

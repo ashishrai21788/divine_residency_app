@@ -45,6 +45,15 @@ class AppPreferences(context: Context) {
     val LAST_KNOWN_LATITUDE: String = "last_known_latitude"
     val LAST_KNOWN_LONGITUDE: String = "last_known_logitude"
 
+    companion object {
+        /** Villa Society API auth tokens (set after login, cleared on logout) */
+        const val VILLA_ACCESS_TOKEN_KEY: String = "villa_access_token"
+        const val VILLA_REFRESH_TOKEN_KEY: String = "villa_refresh_token"
+        /** User role after login: RESIDENT, GUARD, ADMIN — used for role-based navigation */
+        const val VILLA_USER_ROLE_KEY: String = "villa_user_role"
+        const val VILLA_SOCIETY_ID_KEY: String = "villa_society_id"
+    }
+
 
     /* for tiktik user */
     val isFirebaseUserCreated: String = "isFirebaseUserCreated"

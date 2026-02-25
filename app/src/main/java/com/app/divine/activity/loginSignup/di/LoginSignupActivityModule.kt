@@ -2,6 +2,7 @@ package com.app.divine.activity.loginSignup.di
 
 import android.content.Context
 import com.app.core.dagger.preference.AppPreferences
+import com.app.core.dagger.qualifier.DefaultRetrofit
 import com.app.core.dagger.roomdatabase.AppDatabase
 import com.app.core.extensions.ui.getViewModel
 import com.app.divine.activity.loginSignup.view.LoginSignupActivity
@@ -23,7 +24,7 @@ class LoginSignupActivityModule(
     @LoginSignupActivityScope
     @Provides
     fun provideViewModel(appDatabase: AppDatabase,
-                         retrofit: Retrofit,
+                         @DefaultRetrofit retrofit: Retrofit,
                          okHttpClient: OkHttpClient,
                          appPreferences: AppPreferences,
                          context: Context

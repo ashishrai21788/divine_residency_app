@@ -20,6 +20,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
     lateinit var appDatabase: AppDatabase
 
     @Inject
+    @field:com.app.core.dagger.qualifier.DefaultRetrofit
     lateinit var retrofit: Retrofit
 
     @Inject
