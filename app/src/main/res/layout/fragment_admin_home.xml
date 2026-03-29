@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="FragmentAdminHomeBinding" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/villa_bg_page"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/villa_padding_standard">
+
+            <TextView
+                android:id="@+id/admin_home_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Admin"
+                android:textColor="@color/villa_text_primary"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/admin_home_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Society overview and quick actions"
+                android:textColor="@color/villa_text_secondary"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/villa_section_spacing"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/villa_padding_small"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/villa_surface"
+                    app:cardCornerRadius="@dimen/villa_card_corner"
+                    app:cardElevation="@dimen/villa_card_elevation"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/villa_padding_standard">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Residents"
+                            android:textColor="@color/villa_text_secondary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="—"
+                            android:textColor="@color/villa_text_primary"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/villa_padding_small"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/villa_surface"
+                    app:cardCornerRadius="@dimen/villa_card_corner"
+                    app:cardElevation="@dimen/villa_card_elevation"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/villa_padding_standard">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notices"
+                            android:textColor="@color/villa_text_secondary"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Live"
+                            android:textColor="@color/villa_primary"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/villa_section_spacing"
+                app:cardBackgroundColor="@color/villa_surface"
+                app:cardCornerRadius="@dimen/villa_card_corner"
+                app:cardElevation="@dimen/villa_card_elevation"
+                app:cardUseCompatPadding="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/admin_home_residents"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:minHeight="56dp"
+                    android:padding="@dimen/villa_padding_standard"
+                    android:text="Residents &amp; users"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/villa_text_primary"
+                    app:icon="@drawable/ic_tile_format_list"
+                    app:iconGravity="textStart"
+                    app:iconPadding="16dp"
+                    app:iconTint="@color/villa_primary" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</layout>

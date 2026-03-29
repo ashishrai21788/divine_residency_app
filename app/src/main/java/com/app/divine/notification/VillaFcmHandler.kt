@@ -21,12 +21,13 @@ object VillaFcmHandler {
     private const val DATA_COMPLAINT_ID = "complaint_id"
     private const val DATA_BILL_ID = "billing_id"
     private const val DATA_NOTICE_ID = "notice_id"
+    private const val DATA_SOS_ID = "sos_id"
 
     /** Foreground: show in-app banner unless already handled by socket (dedup). */
     fun onForegroundMessage(context: Context, notificationData: NotificationData) {
         val data = notificationData.data ?: emptyMap()
-        val type = data[DATA_TYPE] ?: ""
-        val visitorId = data[DATA_VISITOR_ID]
+        val type = DeepLinkRouter.normalizedType(data[DATA_TYPE])
+        val visitorId = data[DATA_VISITOR_ID] ?: data["visitor_id"]
         if (RealtimeDedup.wasHandledBySocket(type, visitorId, data["timestamp"])) return
         val title = notificationData.title ?: "Notification"
         val body = notificationData.body ?: ""
@@ -40,13 +41,14 @@ object VillaFcmHandler {
             context = context,
             appPreferences = appPreferences,
             type = data[DATA_TYPE] ?: "",
-            visitorId = data[DATA_VISITOR_ID],
-            villaId = data[DATA_VILLA_ID],
-            floorId = data[DATA_FLOOR_ID],
-            deliveryId = data[DATA_DELIVERY_ID],
-            complaintId = data[DATA_COMPLAINT_ID],
-            billId = data[DATA_BILL_ID],
-            noticeId = data[DATA_NOTICE_ID]
+            visitorId = data[DATA_VISITOR_ID] ?: data["visitor_id"],
+            villaId = data[DATA_VILLA_ID] ?: data["villa_id"],
+            floorId = data[DATA_FLOOR_ID] ?: data["floor_id"],
+            deliveryId = data[DATA_DELIVERY_ID] ?: data["delivery_id"],
+            complaintId = data[DATA_COMPLAINT_ID] ?: data["complaint_id"],
+            billId = data[DATA_BILL_ID] ?: data["billing_id"],
+            noticeId = data[DATA_NOTICE_ID] ?: data["notice_id"],
+            sosId = data[DATA_SOS_ID] ?: data["sos_id"],
         )
     }
 }

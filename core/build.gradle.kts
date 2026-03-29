@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.app.core"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 25
@@ -65,6 +65,6 @@ dependencies {
 
     implementation(libs.glide)
     implementation(libs.androidx.swiperefreshlayout)
-
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
 }

@@ -17,6 +17,7 @@ import com.app.divine.fragments.profile.view.ProfileFragment
 import com.app.divine.fragments.resident.ResidentBillingFragment
 import com.app.divine.fragments.resident.ResidentComplaintsFragment
 import com.app.divine.fragments.resident.ResidentVisitorsFragment
+import com.app.divine.navigation.DeepLinkRouter
 import com.app.divine.realtime.RealtimeRefresh
 import com.app.divine.realtime.VillaSocketEvent
 import com.app.divine.realtime.VillaSocketManager
@@ -57,6 +58,7 @@ class LandingMainActivity : AppCompatActivity() {
             switchFragment(HomeFragment())
         }
         handleNotificationIntent(intent)
+        applyDeepLinkFromIntent(intent)
         connectRealtimeSocket()
     }
 
@@ -69,7 +71,7 @@ class LandingMainActivity : AppCompatActivity() {
     private fun connectRealtimeSocket() {
         if (!appPreferences.getLogin()) return
         val socketManager = (application as? AppApplication)?.getVillaSocketManager() ?: return
-        socketManager.connect(com.app.divine.config.VillaSocietyConfig.SOCKET_BASE_URL)
+        socketManager.connect(com.app.core.config.VillaSocietyConfig.SOCKET_BASE_URL)
         socketManager.socketEventLiveData.observe(this) { event ->
             if (event != null && socketManager.isResidentEvent(event.event)) {
                 onRealtimeEvent(event)
@@ -84,12 +86,28 @@ class LandingMainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        setIntent(intent)
         handleNotificationIntent(intent)
+        applyDeepLinkFromIntent(intent)
     }
 
     private fun handleNotificationIntent(intent: Intent?) {
         if (intent?.action == "come.notification.ACTION_NOTIFICATION_CLICK") {
             FirebaseNotificationManager.getInstance().handleIntent(this, intent)
+        }
+    }
+
+    /** Opens the right tab when the user taps a push (MyGate-style). */
+    private fun applyDeepLinkFromIntent(intent: Intent?) {
+        val type = intent?.getStringExtra(DeepLinkRouter.EXTRA_DEEP_LINK_TYPE) ?: return
+        val tab = DeepLinkRouter.residentTabForNotificationType(type) ?: return
+        binding.bottomNavigation.selectedItemId = tab
+        when (tab) {
+            R.id.menu_resident_dashboard -> switchFragment(HomeFragment())
+            R.id.menu_resident_visitors -> switchFragment(ResidentVisitorsFragment())
+            R.id.menu_resident_billing -> switchFragment(ResidentBillingFragment())
+            R.id.menu_resident_complaints -> switchFragment(ResidentComplaintsFragment())
+            R.id.menu_resident_profile -> switchFragment(ProfileFragment())
         }
     }
 

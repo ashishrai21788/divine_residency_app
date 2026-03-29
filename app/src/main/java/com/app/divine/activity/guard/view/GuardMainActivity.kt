@@ -12,6 +12,7 @@ import com.app.divine.activity.guard.fragment.GuardDashboardFragment
 import com.app.divine.activity.guard.fragment.GuardSosFragment
 import com.app.divine.activity.guard.fragment.GuardVisitorsFragment
 import com.app.divine.databinding.ActivityGuardMainBinding
+import com.app.divine.navigation.DeepLinkRouter
 import com.app.divine.realtime.RealtimeRefresh
 import com.app.divine.realtime.VillaSocketEvent
 import com.app.divine.realtime.VillaSocketManager
@@ -33,6 +34,7 @@ class GuardMainActivity : AppCompatActivity() {
             switchFragment(GuardDashboardFragment())
         }
         handleNotificationIntent(intent)
+        applyDeepLinkFromIntent(intent)
         connectRealtimeSocket()
     }
 
@@ -46,7 +48,7 @@ class GuardMainActivity : AppCompatActivity() {
         val app = application as? com.app.divine.AppApplication ?: return
         if (!app.coreComponent.appPreferences().getLogin()) return
         val socketManager = app.getVillaSocketManager()
-        socketManager.connect(com.app.divine.config.VillaSocietyConfig.SOCKET_BASE_URL)
+        socketManager.connect(com.app.core.config.VillaSocietyConfig.SOCKET_BASE_URL)
         socketManager.socketEventLiveData.observe(this) { event ->
             if (event != null && socketManager.isGuardEvent(event.event)) {
                 onRealtimeEvent(event)
@@ -61,12 +63,27 @@ class GuardMainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        setIntent(intent)
         handleNotificationIntent(intent)
+        applyDeepLinkFromIntent(intent)
     }
 
     private fun handleNotificationIntent(intent: Intent?) {
         if (intent?.action == "come.notification.ACTION_NOTIFICATION_CLICK") {
             FirebaseNotificationManager.getInstance().handleIntent(this, intent)
+        }
+    }
+
+    private fun applyDeepLinkFromIntent(intent: Intent?) {
+        val type = intent?.getStringExtra(DeepLinkRouter.EXTRA_DEEP_LINK_TYPE) ?: return
+        val tab = DeepLinkRouter.guardTabForNotificationType(type) ?: return
+        binding.bottomNavigation.selectedItemId = tab
+        when (tab) {
+            R.id.menu_guard_dashboard -> switchFragment(GuardDashboardFragment())
+            R.id.menu_guard_visitors -> switchFragment(GuardVisitorsFragment())
+            R.id.menu_guard_deliveries -> switchFragment(GuardDeliveriesFragment())
+            R.id.menu_guard_sos -> switchFragment(GuardSosFragment())
+            R.id.menu_guard_attendance -> switchFragment(GuardAttendanceFragment())
         }
     }
 
@@ -81,6 +98,10 @@ class GuardMainActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    fun selectGuardTab(menuItemId: Int) {
+        binding.bottomNavigation.selectedItemId = menuItemId
     }
 
     private fun switchFragment(fragment: Fragment) {

@@ -52,6 +52,11 @@ class AppPreferences(context: Context) {
         /** User role after login: RESIDENT, GUARD, ADMIN — used for role-based navigation */
         const val VILLA_USER_ROLE_KEY: String = "villa_user_role"
         const val VILLA_SOCIETY_ID_KEY: String = "villa_society_id"
+        const val VILLA_USER_ID_KEY: String = "villa_user_id"
+        const val VILLA_USER_NAME_KEY: String = "villa_user_name"
+        const val VILLA_VILLA_ID_KEY: String = "villa_villa_id"
+        const val VILLA_FLOOR_ID_KEY: String = "villa_floor_id"
+        const val VILLA_GATE_ID_KEY: String = "villa_gate_id"
     }
 
 

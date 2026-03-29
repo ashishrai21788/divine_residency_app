@@ -3,7 +3,6 @@ package com.app.divine.activity.loginSignup.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.app.divine.R
@@ -66,19 +65,13 @@ class LoginSignupActivity : AppCompatActivity() {
         binding.btnRegister.clickWithDebounce {
             startActivity(Intent(this, SignupActivity::class.java))
         }
-
-        binding.toolbar.setNavigationOnClickListener {
-            Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show()
-            finish()
-        }
     }
 
     private fun initLayout() {
-        binding.headline = "Headline"
-        binding.subtext = "Subtext"
+        binding.headline = "Your Society, Connected"
+        binding.subtext = "Manage visitors, bills, complaints and more"
         binding.loginText = "Login"
         binding.registerText = "Register"
-        binding.appBarTitle = "Login/Signup"
     }
 
     override fun onResume() {

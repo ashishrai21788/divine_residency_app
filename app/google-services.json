@@ -1,50 +1,71 @@
 {
   "project_info": {
-    "project_number": "322688356753",
-    "firebase_url": "https://classroom-aecc2-default-rtdb.firebaseio.com",
-    "project_id": "classroom-aecc2",
-    "storage_bucket": "classroom-aecc2.appspot.com"
+    "project_number": "778986987863",
+    "project_id": "drwavisitorapp",
+    "storage_bucket": "drwavisitorapp.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:322688356753:android:edec2223636f3d9ec74a30",
+        "mobilesdk_app_id": "1:778986987863:android:4237bfbb4a795d42349e12",
         "android_client_info": {
           "package_name": "com.app.divine"
         }
       },
       "oauth_client": [
         {
-          "client_id": "322688356753-tra4vrnkhsmshgnard0ilrukgafv0emv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.app.divine",
-            "certificate_hash": "55a48e1a17a067c7fb22efb3639558eac0fc313f"
-          }
-        },
-        {
-          "client_id": "322688356753-ggtpigeff1luea38lge1bslan6aaf5u7.apps.googleusercontent.com",
+          "client_id": "778986987863-famo6g62t1o0l8116nv1hunarqkgmfq4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB1QkOZt5r1HfndpXWkhZcISp9xhB0Q2rU"
+          "current_key": "AIzaSyCi-ElBHotfFpGcFw_zCZl2ly1HuoE7VSc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "322688356753-ggtpigeff1luea38lge1bslan6aaf5u7.apps.googleusercontent.com",
+              "client_id": "778986987863-famo6g62t1o0l8116nv1hunarqkgmfq4.apps.googleusercontent.com",
               "client_type": 3
-            },
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778986987863:android:b4a7b5e42ea5a3ac349e12",
+        "android_client_info": {
+          "package_name": "com.drwa.visitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778986987863-1cg5g4oioppltsk6dfp0bfqfbrlqi4tn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.drwa.visitor",
+            "certificate_hash": "bf0b4b6ce6e921388ee986a2a30cc09b4f8483ce"
+          }
+        },
+        {
+          "client_id": "778986987863-famo6g62t1o0l8116nv1hunarqkgmfq4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi-ElBHotfFpGcFw_zCZl2ly1HuoE7VSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
             {
-              "client_id": "322688356753-bijte3u4uj8nbg6kp164vbnn9gvd0jma.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.app.divine"
-              }
+              "client_id": "778986987863-famo6g62t1o0l8116nv1hunarqkgmfq4.apps.googleusercontent.com",
+              "client_type": 3
             }
           ]
         }

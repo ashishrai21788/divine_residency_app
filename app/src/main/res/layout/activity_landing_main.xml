@@ -3,35 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="ActivityLandingMainBinding">
-
-    </data>
+    <data class="ActivityLandingMainBinding" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.landing.LandingMainActivity">
+        android:background="@color/villa_bg_page"
+        tools:context=".activity.landing.view.LandingMainActivity">
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/bottomNavigation" />
+            android:layout_marginBottom="56dp" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
+            style="@style/BottomNavigationViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            style="@style/BottomNavigationViewStyle"
-            app:menu="@menu/bottom_nav_menu_resident"
-            android:padding="@dimen/_5sdp"
+            android:background="@drawable/bottom_nav_bg"
+            android:elevation="8dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
             app:itemIconTint="@color/bottom_nav_selector"
             app:itemTextColor="@color/bottom_nav_selector"
             app:labelVisibilityMode="labeled"
-            android:background="@drawable/bottom_nav_curve"
-            android:clipToPadding="true"
-            android:clipChildren="true" />
+            app:menu="@menu/bottom_nav_menu_resident" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</layout> 
+</layout>

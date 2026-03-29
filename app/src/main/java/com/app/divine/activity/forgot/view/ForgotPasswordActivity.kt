@@ -45,7 +45,12 @@ class ForgotPasswordActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        binding.appBarTitle = "Forgot Password"
+        binding.appBarTitle = "Forgot password"
+        binding.instructionText =
+            "Enter the email linked to your account. We will send you a link to reset your password."
+        binding.emailHint = "Email address"
+        binding.submitText = "Send reset link"
+        binding.email = ""
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }

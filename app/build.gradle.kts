@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.app.divine"
-    compileSdk = 34
+    compileSdk = 35
     packaging {
         dex {
             useLegacyPackaging = false
@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "com.app.divine"
         minSdk = 25
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -41,37 +41,20 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-//    buildFeatures {
-//        buildConfig = true
-//    }
-    dataBinding {
-        enable = true
+    buildFeatures {
+        dataBinding = true
     }
-
-
 }
 
 dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
     api(libs.sdp.android)
     api(libs.ssp.android)
     implementation(libs.androidx.appcompat)
@@ -80,17 +63,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
     implementation(project(":core"))
     implementation(project(":firebaseSDK"))
     implementation(platform(libs.firebase.bom))
 
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-
-    // Add the dependency for the Firebase SDK for Google Analytics
     implementation(libs.firebase.analytics)
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx.v250)
@@ -112,4 +88,12 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.material:material:1.9.0")
+    implementation(libs.androidx.swiperefreshlayout)
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation(libs.glide)
+
+    implementation("io.socket:socket.io-client:2.1.1")
 }

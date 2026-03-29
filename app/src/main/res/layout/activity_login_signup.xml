@@ -4,148 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data class="ActivityLoginSignupBinding">
-
-        <variable
-            name="headline"
-            type="String" />
-
-        <variable
-            name="subtext"
-            type="String" />
-
-        <variable
-            name="loginText"
-            type="String" />
-
-        <variable
-            name="registerText"
-            type="String" />
-
-        <variable
-            name="appBarTitle"
-            type="String" />
+        <variable name="headline" type="String" />
+        <variable name="subtext" type="String" />
+        <variable name="loginText" type="String" />
+        <variable name="registerText" type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/villa_bg_page"
+        android:fitsSystemWindows="true"
         tools:context=".activity.loginSignup.view.LoginSignupActivity">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+        <ImageView
+            android:id="@+id/illustration"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="@dimen/villa_padding_large"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-            app:title="@{appBarTitle}"
-            app:titleTextColor="@color/login_signup_text_primary" />
+            app:tint="@color/villa_primary" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/parentView"
+        <TextView
+            android:id="@+id/tvHeadline"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            app:cardBackgroundColor="@color/white"
-            app:cardElevation="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/villa_padding_large"
+            android:layout_marginTop="@dimen/villa_section_spacing"
+            android:gravity="center"
+            android:text="@{headline}"
+            android:textColor="@color/villa_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            app:layout_constraintTop_toBottomOf="@id/illustration" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="@dimen/_24sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/tvSubtext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/villa_padding_large"
+            android:layout_marginTop="@dimen/villa_padding_small"
+            android:gravity="center"
+            android:text="@{subtext}"
+            android:textColor="@color/villa_text_secondary"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHeadline" />
 
-                <ImageView
-                    android:id="@+id/illustration"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:contentDescription="illustration"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/tvHeadline"
-                    android:src="@drawable/ic_launcher_foreground" />
+        <LinearLayout
+            android:id="@+id/buttonColumn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/villa_padding_large"
+            android:layout_marginBottom="@dimen/villa_padding_large"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-                <TextView
-                    android:id="@+id/tvHeadline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_12sdp"
-                    android:gravity="center"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:text="@{headline}"
-                    android:textColor="@color/login_signup_text_primary"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/tvSubtext"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogin"
+                style="@style/VillaButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{loginText}" />
 
-                <TextView
-                    android:id="@+id/tvSubtext"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_32sdp"
-                    android:gravity="center"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:text="@{subtext}"
-                    android:textColor="@color/login_signup_text_secondary"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/loginSignupLayout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <LinearLayout
-                    android:id="@+id/loginSignupLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <Button
-                        android:id="@+id/btnLogin"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_48sdp"
-                        android:layout_marginEnd="@dimen/_12sdp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/login_signup_button"
-                        android:text="@{loginText}"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white" />
-
-                    <Button
-                        android:id="@+id/btnRegister"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_48sdp"
-                        android:layout_marginStart="@dimen/_12sdp"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:backgroundTint="@color/white"
-                        android:text="@{registerText}"
-                        android:textAllCaps="false"
-                        android:textColor="@color/login_signup_text_primary" />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRegister"
+                style="@style/VillaButton.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/villa_padding_small"
+                android:text="@{registerText}" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

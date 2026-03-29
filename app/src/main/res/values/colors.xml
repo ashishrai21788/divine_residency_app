@@ -9,13 +9,49 @@
     <color name="white">#FFFFFFFF</color>
     <color name="login_signup_blue">#0057FF</color>
     <color name="login_signup_button">#003EA8</color>
-    <color name="login_signup_text_primary">#23235B</color>
-    <color name="login_signup_text_secondary">#6B6B6B</color>
+    <color name="login_signup_text_primary">#1A1A2E</color>
+    <color name="login_signup_text_secondary">#6B7280</color>
     <color name="login_button_blue">#0057FF</color>
     <color name="login_input_border">#0057FF</color>
     <color name="login_input_bg">#F6F7FB</color>
-    <color name="login_hint_gray">#BFC6D1</color>
-    <color name="login_text_black">#23235B</color>
-    <color name="login_text_gray">#6B6B6B</color>
-    <color name="login_divider_gray">#E0E0E0</color>
+    <color name="login_hint_gray">#9CA3AF</color>
+    <color name="login_text_black">#1A1A2E</color>
+    <color name="login_text_gray">#6B7280</color>
+    <color name="login_divider_gray">#E5E7EB</color>
+
+    <!-- Villa UI: surfaces & text -->
+    <color name="villa_bg_page">#F5F7FA</color>
+    <color name="villa_surface">#FFFFFF</color>
+    <color name="villa_primary">#0057FF</color>
+    <color name="villa_primary_dark">#003EA8</color>
+    <color name="villa_card_bg">#FFFFFF</color>
+    <color name="villa_card_elevation">#0D000000</color>
+    <color name="villa_text_primary">#1A1A2E</color>
+    <color name="villa_text_secondary">#6B7280</color>
+    <color name="villa_text_hint">#9CA3AF</color>
+    <color name="villa_input_stroke">#E5E7EB</color>
+    <color name="villa_divider">#E5E7EB</color>
+    <color name="villa_nav_inactive">#9CA3AF</color>
+
+    <!-- Status (solid — legacy) -->
+    <color name="villa_status_pending">#F59E0B</color>
+    <color name="villa_status_approved">#10B981</color>
+    <color name="villa_status_rejected">#EF4444</color>
+    <color name="villa_status_paid">#10B981</color>
+
+    <!-- Status tags: light bg + dark text (MyGate-style) -->
+    <color name="villa_tag_bg_pending">#FEF3C7</color>
+    <color name="villa_tag_text_pending">#D97706</color>
+    <color name="villa_tag_bg_approved">#D1FAE5</color>
+    <color name="villa_tag_text_approved">#065F46</color>
+    <color name="villa_tag_bg_rejected">#FEE2E2</color>
+    <color name="villa_tag_text_rejected">#991B1B</color>
+    <color name="villa_tag_bg_paid">#D1FAE5</color>
+    <color name="villa_tag_text_paid">#065F46</color>
+    <color name="villa_tag_bg_default">#F3F4F6</color>
+    <color name="villa_tag_text_default">#374151</color>
+
+    <color name="villa_sos_red">#DC2626</color>
+    <color name="villa_shimmer">#E5E7EB</color>
+    <color name="villa_splash_bg">#1A1A2E</color>
 </resources>

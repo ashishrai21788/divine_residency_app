@@ -8,8 +8,8 @@ import com.app.divine.api.dto.VillaRefreshTokenRequest
 import com.app.divine.api.dto.VillaUserDto
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.POST
 
 /** Villa Society Auth APIs. Base URL: http://localhost:3000/api/ */
@@ -31,7 +31,7 @@ interface VillaAuthApi {
     @POST("notifications/register")
     fun registerFcmToken(@Body body: VillaFcmTokenRequest): Call<Unit>
 
-    /** Remove FCM token on logout. */
-    @DELETE("notifications/token")
-    fun removeFcmToken(): Call<Unit>
+    /** Remove this device's FCM token only (backend expects body). */
+    @HTTP(method = "DELETE", path = "notifications/token", hasBody = true)
+    fun removeFcmToken(@Body body: VillaFcmTokenRequest): Call<Unit>
 }

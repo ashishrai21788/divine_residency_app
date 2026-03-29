@@ -80,6 +80,7 @@ class SignupActivity: BaseLanguageActivity() {
             binding.confirmPasswordHint = "Confirm your password"
             binding.signUpText = LanguageManager.getString("signup.signup_button")
             binding.alreadyHaveAccountText = LanguageManager.getString("signup.login_link")
+            binding.appBarTitle = LanguageManager.getString("signup.title")
         }
     }
 

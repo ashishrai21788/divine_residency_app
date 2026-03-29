@@ -11,7 +11,6 @@ import com.app.core.dagger.preference.AppPreferences
 import com.app.core.dagger.roomdatabase.AppDatabase
 import com.app.core.extensions.clickWithDebounce
 import com.app.core.extensions.showToastS
-import com.app.core.extensions.validateEmail
 import com.app.divine.AppApplication
 import com.app.divine.activity.forgot.view.ForgotPasswordActivity
 import com.app.divine.navigation.VillaRoleRouter
@@ -86,6 +85,7 @@ class LoginActivity : BaseLanguageActivity() {
                 is ApiResult.Loading -> { /* optional: show progress */ }
                 is ApiResult.Success -> {
                     Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                    (application as? AppApplication)?.let { it.sessionRepository.refreshFromPreferences() }
                     (application as? AppApplication)?.sendFcmTokenToBackendIfLoggedIn()
                     startActivity(VillaRoleRouter.getPostLoginIntent(this, appPreferences))
                     finish()
@@ -123,9 +123,9 @@ class LoginActivity : BaseLanguageActivity() {
 
         binding.btnSignIn.clickWithDebounce {
             if (isLoginValidated()) {
-                val email = binding.etEmail.text.toString().trim()
+                val identifier = binding.etEmail.text.toString().trim()
                 val password = binding.etPassword.text.toString().trim()
-                callLoginApi(email, password)
+                callLoginApi(identifier, password)
             } else {
                 Toast.makeText(this, "Invalid Data", Toast.LENGTH_SHORT).show()
             }
@@ -146,12 +146,11 @@ class LoginActivity : BaseLanguageActivity() {
             binding.subheadline = "Welcome back you have been missed!"
             binding.email = LanguageManager.getString("login.email")
             binding.password = LanguageManager.getString("login.password")
-            binding.emailHint = "Enter your email"
+            binding.emailHint = "Email, phone or user ID"
             binding.passwordHint = "Enter your password"
             binding.forgotPasswordText = LanguageManager.getString("login.forgot_password")
             binding.signInText = LanguageManager.getString("login.login_button")
             binding.createAccountText = LanguageManager.getString("login.signup_link")
-            binding.orContinueWithText = "Or Continue With"
             binding.appBarTitle = LanguageManager.getString("login.title")
         }
     }
@@ -164,21 +163,20 @@ class LoginActivity : BaseLanguageActivity() {
         super.onResume()
     }
 
-    private fun LoginActivity.callLoginApi(email: String, password: String) {
-        viewModel.callLoginApi(email, password)
+    private fun LoginActivity.callLoginApi(identifier: String, password: String) {
+        viewModel.callLoginApi(identifier, password)
     }
 }
 
 
 private fun LoginActivity.isLoginValidated(): Boolean {
-    if (binding.etEmail.text.toString().isEmpty() || !binding.etEmail.text.toString()
-            .validateEmail()
-    ) {
-        showToastS("Enter valid Email-id")
+    val identifier = binding.etEmail.text.toString().trim()
+    val password = binding.etPassword.text.toString()
+    if (identifier.isEmpty()) {
+        showToastS("Enter email, phone or user ID")
         return false
-    } else if (binding.etPassword.text.toString().length < 8 && binding.etPassword.text.toString()
-            .isEmpty()
-    ) {
+    }
+    if (password.length < 8 || password.isEmpty()) {
         showToastS("Enter valid password")
         return false
     }

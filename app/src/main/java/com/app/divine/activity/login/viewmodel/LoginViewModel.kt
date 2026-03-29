@@ -24,9 +24,16 @@ class LoginViewModel(
     private val _villaLoginResult = MutableLiveData<ApiResult<VillaAuthResponse>>()
     val villaLoginResult: LiveData<ApiResult<VillaAuthResponse>> = _villaLoginResult
 
-    fun callLoginApi(email: String, password: String) {
-        villaAuthRepository.login(email = email, password = password) { result ->
-            _villaLoginResult.postValue(result)
+    /** Login with email, phone number, or user ID. Detects type and calls the appropriate API. */
+    fun callLoginApi(identifier: String, password: String) {
+        val trimmed = identifier.trim()
+        when {
+            trimmed.contains("@") ->
+                villaAuthRepository.login(email = trimmed, password = password) { _villaLoginResult.postValue(it) }
+            trimmed.all { it.isDigit() || it == '+' || it == ' ' || it == '-' } ->
+                villaAuthRepository.login(mobile = trimmed.filter { it.isDigit() || it == '+' }, password = password) { _villaLoginResult.postValue(it) }
+            else ->
+                villaAuthRepository.login(username = trimmed, password = password) { _villaLoginResult.postValue(it) }
         }
     }
 

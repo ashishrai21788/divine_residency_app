@@ -1,7 +1,11 @@
 package com.app.divine
 
+import android.app.Activity
 import android.app.Application
+import android.app.Application.ActivityLifecycleCallbacks
+import android.os.Bundle
 import android.util.Log
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.LiveData
 import com.app.core.dagger.component.CoreComponent
 import com.app.core.dagger.component.DaggerCoreComponent
@@ -13,6 +17,7 @@ import com.app.divine.notification.VillaFcmHandler
 import com.app.divine.notification.VillaNotificationChannels
 import com.app.divine.realtime.VillaSocketManager
 import com.app.divine.repository.VillaAuthRepository
+import com.app.divine.session.SessionRepository
 import com.app.divine.utils.LanguageManager
 import com.app.divine.utils.SimpleLifecycleLogger
 import com.google.firebase.messaging.FirebaseMessaging
@@ -21,15 +26,36 @@ import com.notification.FirebaseNotificationManager
 import com.notification.models.NotificationData
 
 
+/** Ensures window content is laid out below the status bar (avoids edge-to-edge overlap on API 35+). */
+private class SystemBarInsetsCallback : ActivityLifecycleCallbacks {
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(activity.window, true)
+    }
+
+    override fun onActivityStarted(activity: Activity) = Unit
+    override fun onActivityResumed(activity: Activity) = Unit
+    override fun onActivityPaused(activity: Activity) = Unit
+    override fun onActivityStopped(activity: Activity) = Unit
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
+    override fun onActivityDestroyed(activity: Activity) = Unit
+}
+
 class AppApplication : Application(), CoreComponentProvider {
     lateinit var coreComponent: CoreComponent
 
+    val sessionRepository: SessionRepository by lazy { SessionRepository(coreComponent.appPreferences()) }
+
     override fun onCreate() {
         super.onCreate()
+        registerActivityLifecycleCallbacks(SystemBarInsetsCallback())
         coreComponent =
             DaggerCoreComponent.builder().contextModule(ContextModule(this)).networkModule(
                 NetworkModule()
             ).build()
+
+        if (coreComponent.appPreferences().getLogin()) {
+            sessionRepository.refreshFromPreferences()
+        }
 
         LanguageManager.initialize(this)
         SimpleLifecycleLogger.getInstance().initialize(this)
@@ -93,7 +119,7 @@ class AppApplication : Application(), CoreComponentProvider {
     /** Realtime socket (Phase 6). Connect when on Resident/Guard screen; disconnect on logout. */
     fun getVillaSocketManager(): VillaSocketManager {
         if (_villaSocketManager == null) {
-            _villaSocketManager = VillaSocketManager(coreComponent.appPreferences(), coreComponent.okHttpClient())
+            _villaSocketManager = VillaSocketManager(coreComponent.appPreferences())
         }
         return _villaSocketManager!!
     }
@@ -106,10 +132,15 @@ class AppApplication : Application(), CoreComponentProvider {
         getVillaSocketManager().disconnect()
     }
 
-    /** Call from Profile (or any logout UI): clears Villa auth, FCM token removal, disconnects socket. Caller should then start LoginActivity and finish. */
+    /** Call from Profile (or any logout UI): clears Villa auth, unregisters this device's FCM only, disconnects socket. Caller should then start LoginActivity and finish. */
     fun performLogout() {
-        val api = coreComponent.villaSocietyRetrofit().create(com.app.divine.api.villa.VillaAuthApi::class.java)
-        VillaAuthRepository(api, coreComponent.appPreferences()).logout()
+        val api = coreComponent.villaSocietyRetrofit().create(VillaAuthApi::class.java)
+        val repo = VillaAuthRepository(api, coreComponent.appPreferences())
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            val token = task.result?.takeIf { task.isSuccessful }
+            repo.logout(fcmTokenForThisDevice = token)
+        }
+        sessionRepository.clear()
         forceLoggedOut()
     }
 

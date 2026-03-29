@@ -21,12 +21,17 @@ data class VillaChangePasswordRequest(
     @SerializedName("newPassword") val newPassword: String
 )
 
-/** Response: login / refresh-token (200/201) */
+/** Response: login / refresh-token (200/201). Supports legacy `accessToken`+`user` or slim `{ token, role }`. */
 data class VillaAuthResponse(
     @SerializedName("accessToken") val accessToken: String? = null,
+    @SerializedName("token") val token: String? = null,
     @SerializedName("refreshToken") val refreshToken: String? = null,
+    @SerializedName("role") val role: String? = null,
     @SerializedName("user") val user: VillaUserDto? = null
-)
+) {
+    fun accessTokenOrToken(): String = (accessToken ?: token).orEmpty()
+    fun roleOrFromUser(): String? = role ?: user?.role
+}
 
 data class VillaUserDto(
     @SerializedName("id") val id: String? = null,

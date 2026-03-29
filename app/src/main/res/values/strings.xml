@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">The Divine</string>
+    <string name="splash_tagline">Society management, simplified</string>
     <string name="language">Language</string>
+    <string name="guard_offline_queue_fmt">%d offline entries queued for sync</string>
+    <string name="visitor_approve_title">Approve visitor?</string>
+    <string name="visitor_reject_title">Reject visitor?</string>
+    <string name="visitor_approval_detail_fmt">%1$s\n%2$s</string>
+    <string name="action_approve">Approve</string>
+    <string name="action_reject">Reject</string>
+    <string name="action_publish_notice">Publish notice</string>
+    <string name="admin_notices_empty_title">No notices yet</string>
+    <string name="admin_notices_empty_subtitle">Tap + to publish the first notice</string>
+    <string name="admin_residents_empty_title">No users found</string>
+    <string name="admin_logs_empty_title">No visitor logs</string>
 </resources>

@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.app.divine.R
-import com.app.divine.databinding.ActivitySignupBinding
 import com.app.core.dagger.preference.AppPreferences
 import com.app.core.dagger.roomdatabase.AppDatabase
 import com.app.core.extensions.showToastS
@@ -22,14 +21,12 @@ import javax.inject.Inject
 /** Action used by firebaseSDK when notification is clicked (must match SDK intent action). */
 private const val ACTION_NOTIFICATION_CLICK = "come.notification.ACTION_NOTIFICATION_CLICK"
 
-class SplashActivity: AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
-    val TAG =  SplashActivity::class.java.simpleName
+    val TAG = SplashActivity::class.java.simpleName
 
     @Inject
     lateinit var appDatabase: AppDatabase
-
-    private lateinit var binding: ActivitySignupBinding
 
     @Inject
     @field:com.app.core.dagger.qualifier.DefaultRetrofit
@@ -43,6 +40,7 @@ class SplashActivity: AppCompatActivity() {
 
     @Inject
     lateinit var coreConnectionLiveData: CoreConnectionLiveData
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (intent?.action == ACTION_NOTIFICATION_CLICK) {
@@ -50,7 +48,7 @@ class SplashActivity: AppCompatActivity() {
             finish()
             return
         }
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_splash)
         DaggerSplashActivityComponent.builder()
             .coreComponent((application as AppApplication).coreComponent)
             .splashActivityModule(SplashActivityModule(this))
@@ -58,24 +56,22 @@ class SplashActivity: AppCompatActivity() {
             .inject(this)
 
         coreConnectionLiveData.observe(this, Observer {
-            if(it){
+            if (it) {
                 showToastS("active")
-            }else{
+            } else {
                 showToastS("inactive")
             }
         })
-        
-        // Check language flow and proceed accordingly
+
         checkLanguageFlow()
     }
-    
+
     private fun checkLanguageFlow() {
-        // Add a small delay to show splash screen
         android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
             val nextActivity = LanguageFlowManager.getNextActivityAfterSplash(this)
             val intent = Intent(this, nextActivity)
             startActivity(intent)
             finish()
-        }, 2000) // 2 seconds delay
+        }, 2000)
     }
 }

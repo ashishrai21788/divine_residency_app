@@ -3,6 +3,7 @@ package com.app.core.dagger.module
 import android.content.Context
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import com.app.core.config.VillaSocietyConfig
 import com.app.core.dagger.APIServices
 import com.app.core.dagger.preference.AppPreferences
 import com.app.core.dagger.qualifier.DefaultRetrofit
@@ -26,8 +27,8 @@ class NetworkModule() {
     private var READ_TIMEOUT: Long = 3 * 60L
     private var WRITE_TIMEOUT: Long = 3 * 60L
 
-    /** Base URL for Villa Society API (trailing slash). Keep in sync with app VillaSocietyConfig.API_BASE_URL_WITH_PATH. */
-    private val villaSocietyBaseUrl: String = "http://localhost:3000/api/"
+    /** Villa Society Retrofit base; defined in [VillaSocietyConfig.API_BASE_URL_WITH_PATH]. */
+    private val villaSocietyBaseUrl: String = VillaSocietyConfig.API_BASE_URL_WITH_PATH
 
     @Singleton
     @Provides
